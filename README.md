@@ -24,8 +24,8 @@ Think of it like GitHub Copilot, but for documenting and governing your data war
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/datahub-ai-enricher.git
-cd datahub-ai-enricher
+git clone https://github.com/synchrony-solutions/curation-enricher-ai.git
+cd curation-enricher-ai
 ```
 
 2. Install dependencies with Poetry:
@@ -50,17 +50,17 @@ docker-compose up -d
 
 Enrich a single dataset:
 ```bash
-poetry run datahub-ai-enricher enrich "urn:li:dataset:(urn:li:dataPlatform:snowflake,mydb.schema.users,PROD)"
+poetry run curation-enricher-ai enrich "urn:li:dataset:(urn:li:dataPlatform:snowflake,mydb.schema.users,PROD)"
 ```
 
 Enrich multiple datasets in batch:
 ```bash
-poetry run datahub-ai-enricher batch --platform snowflake --limit 10
+poetry run curation-enricher-ai batch --platform snowflake --limit 10
 ```
 
 Test your connections:
 ```bash
-poetry run datahub-ai-enricher test-connection
+poetry run curation-enricher-ai test-connection
 ```
 
 #### Python API
@@ -155,7 +155,7 @@ DataHub UI will be available at http://localhost:9002
 ### Project Structure
 
 ```
-datahub-ai-enricher/
+curation-enricher-ai/
 ├── src/enricher/          # Main package
 │   ├── config.py          # Configuration management
 │   ├── datahub_client.py  # DataHub API client
@@ -240,8 +240,8 @@ This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENS
 ## Support
 
 - 📚 [Documentation](docs/)
-- 🐛 [Issue Tracker](https://github.com/yourusername/datahub-ai-enricher/issues)
-- 💬 [Discussions](https://github.com/yourusername/datahub-ai-enricher/discussions)
+- 🐛 [Issue Tracker](https://github.com/synchrony-solutions/curation-enricher-ai/issues)
+- 💬 [Discussions](https://github.com/synchrony-solutions/curation-enricher-ai/discussions)
 
 ---
 

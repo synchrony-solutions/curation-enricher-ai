@@ -11,8 +11,8 @@ Be respectful, constructive, and collaborative. We're all here to make data cata
 1. Fork the repository on GitHub
 2. Clone your fork locally:
    ```bash
-   git clone https://github.com/yourusername/datahub-ai-enricher.git
-   cd datahub-ai-enricher
+   git clone https://github.com/synchrony-solutions/curation-enricher-ai.git
+   cd curation-enricher-ai
    ```
 3. Install dependencies:
    ```bash

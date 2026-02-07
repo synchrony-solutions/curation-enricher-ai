@@ -15,8 +15,8 @@ Before you begin, make sure you have:
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/datahub-ai-enricher.git
-cd datahub-ai-enricher
+git clone https://github.com/synchrony-solutions/curation-enricher-ai.git
+cd curation-enricher-ai
 
 # Install dependencies
 make install-dev
@@ -72,7 +72,7 @@ Test that everything is connected properly:
 make test-connection
 
 # Or using the CLI directly
-poetry run datahub-ai-enricher test-connection
+poetry run curation-enricher-ai test-connection
 ```
 
 You should see:
@@ -122,7 +122,7 @@ Copy the URN of a dataset and enrich it:
 # Replace with an actual dataset URN from your DataHub instance
 DATASET_URN="urn:li:dataset:(urn:li:dataPlatform:snowflake,mydb.schema.users,PROD)"
 
-poetry run datahub-ai-enricher enrich "$DATASET_URN"
+poetry run curation-enricher-ai enrich "$DATASET_URN"
 ```
 
 You'll see output like:
@@ -142,10 +142,10 @@ You'll see output like:
 To enrich multiple datasets at once:
 
 ```bash
-poetry run datahub-ai-enricher batch --limit 10
+poetry run curation-enricher-ai batch --limit 10
 
 # Or filter by platform
-poetry run datahub-ai-enricher batch --platform snowflake --limit 5
+poetry run curation-enricher-ai batch --platform snowflake --limit 5
 ```
 
 ## Step 7: Review and Apply Suggestions
@@ -153,7 +153,7 @@ poetry run datahub-ai-enricher batch --platform snowflake --limit 5
 By default, suggestions are only displayed, not applied. To apply suggestions automatically:
 
 ```bash
-poetry run datahub-ai-enricher enrich "$DATASET_URN" --apply
+poetry run curation-enricher-ai enrich "$DATASET_URN" --apply
 ```
 
 **⚠️ Warning**: The `--apply` flag will automatically update your DataHub metadata. Review suggestions first!
@@ -182,7 +182,7 @@ features:
 Use it with:
 
 ```bash
-poetry run datahub-ai-enricher enrich "$DATASET_URN" --config config.yml
+poetry run curation-enricher-ai enrich "$DATASET_URN" --config config.yml
 ```
 
 ### Integrate with Your Workflow
@@ -289,8 +289,8 @@ make enrich DATASET_URN="urn:..."  # Enrich a dataset
 ## Getting Help
 
 - 📚 [Full Documentation](README.md)
-- 🐛 [Report Issues](https://github.com/yourusername/datahub-ai-enricher/issues)
-- 💬 [Discussions](https://github.com/yourusername/datahub-ai-enricher/discussions)
+- 🐛 [Report Issues](https://github.com/synchrony-solutions/curation-enricher-ai/issues)
+- 💬 [Discussions](https://github.com/synchrony-solutions/curation-enricher-ai/discussions)
 - 📖 [DataHub Docs](https://datahubproject.io/docs)
 
 ## What's Next?

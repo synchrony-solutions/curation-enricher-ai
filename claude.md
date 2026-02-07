@@ -69,7 +69,7 @@ The plugin will be implemented as a **DataHub ingestion source** that:
 ### Key Components
 
 ```text
-datahub-ai-enricher/
+curation-enricher-ai/
 ├── src/
 │   ├── enricher/
 │   │   ├── __init__.py
@@ -323,7 +323,7 @@ datahub-ai-enricher/
 **Next Actions:**
 
 1. Set up local DataHub instance with Docker
-2. Create GitHub repository: `datahub-ai-enricher`
+2. Create GitHub repository: `curation-enricher-ai`
 3. Initialize Python project with poetry
 4. Schedule 2 customer discovery calls
 5. Test DataHub GraphQL API queries

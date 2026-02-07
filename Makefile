@@ -62,10 +62,10 @@ docker-clean: ## Stop and remove DataHub volumes
 	docker-compose down -v
 
 enrich: ## Run enricher on a dataset (use DATASET_URN=...)
-	poetry run datahub-ai-enricher enrich "$(DATASET_URN)"
+	poetry run curation-enricher-ai enrich "$(DATASET_URN)"
 
 test-connection: ## Test connection to DataHub and Claude API
-	poetry run datahub-ai-enricher test-connection
+	poetry run curation-enricher-ai test-connection
 
 build: ## Build package distribution
 	poetry build

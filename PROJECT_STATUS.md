@@ -21,7 +21,7 @@ This document summarizes the current state of the DataHub AI Enricher project af
 
 ### 2. Project Structure
 ```
-datahub-ai-enricher/
+curation-enricher-ai/
 ├── src/enricher/              ✅ Core package
 │   ├── __init__.py           ✅ Package initialization
 │   ├── config.py             ✅ Configuration with Pydantic

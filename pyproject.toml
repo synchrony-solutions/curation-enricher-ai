@@ -1,12 +1,12 @@
 [tool.poetry]
-name = "datahub-ai-enricher"
+name = "curation-enricher-ai"
 version = "0.1.0"
 description = "An open-source DataHub plugin that uses LLMs to automatically suggest metadata enrichments"
 authors = ["Newt Braswell <your.email@example.com>"]
 license = "Apache-2.0"
 readme = "README.md"
-homepage = "https://github.com/yourusername/datahub-ai-enricher"
-repository = "https://github.com/yourusername/datahub-ai-enricher"
+homepage = "https://github.com/synchrony-solutions/curation-enricher-ai"
+repository = "https://github.com/synchrony-solutions/curation-enricher-ai"
 keywords = ["datahub", "metadata", "ai", "llm", "data-catalog"]
 classifiers = [
     "Development Status :: 3 - Alpha",
@@ -45,7 +45,7 @@ ipython = "^8.20.0"
 types-pyyaml = "^6.0.0"
 
 [tool.poetry.scripts]
-datahub-ai-enricher = "enricher.cli:main"
+curation-enricher-ai = "enricher.cli:main"
 
 [build-system]
 requires = ["poetry-core"]
