@@ -39,7 +39,7 @@
 ### Core Technology Stack
 
 ```yaml
-Language: Python 3.9+
+Language: Python 3.10+
 Primary Dependencies:
   - acryl-datahub (DataHub SDK)
   - anthropic (Claude API)

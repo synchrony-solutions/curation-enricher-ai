@@ -6,7 +6,7 @@ This guide will walk you through setting up and using the DataHub AI Enricher fo
 
 Before you begin, make sure you have:
 
-- **Python 3.9+** installed ([download here](https://www.python.org/downloads/))
+- **Python 3.10+** installed ([download here](https://www.python.org/downloads/))
 - **Poetry** for dependency management ([install guide](https://python-poetry.org/docs/#installation))
 - **Docker & Docker Compose** for running DataHub locally ([install guide](https://docs.docker.com/get-docker/))
 - **Anthropic API key** ([get one here](https://console.anthropic.com/))

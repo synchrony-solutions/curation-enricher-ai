@@ -16,7 +16,7 @@ Think of it like GitHub Copilot, but for documenting and governing your data war
 
 ### Prerequisites
 
-- Python 3.9 or higher
+- Python 3.10 or higher
 - DataHub instance (local or remote)
 - Anthropic API key ([get one here](https://console.anthropic.com/))
 
