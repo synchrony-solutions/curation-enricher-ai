@@ -1,0 +1,37 @@
+# Sample configuration for DataHub AI Enricher
+# Copy this file and customize it for your environment
+
+# DataHub Connection
+datahub:
+  gms_url: "http://localhost:8080"
+  # Optional: Personal access token for authentication
+  # gms_token: "your_token_here"
+
+# Claude API Configuration
+llm:
+  # Get your API key from: https://console.anthropic.com/
+  api_key: "${ANTHROPIC_API_KEY}"
+  model: "claude-sonnet-4-5-20250929"
+  max_tokens: 4096
+  temperature: 0.7
+
+# Processing Configuration
+processing:
+  batch_size: 10
+  max_retries: 3
+  log_level: "INFO"
+
+# Feature Flags
+features:
+  enable_column_descriptions: true
+  enable_pii_detection: true
+  enable_tag_suggestions: true
+
+# Optional: Filter datasets by platform
+# filters:
+#   platforms:
+#     - snowflake
+#     - postgres
+#   exclude_patterns:
+#     - "*.temp"
+#     - "test_*"
