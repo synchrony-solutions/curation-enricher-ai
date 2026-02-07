@@ -2,7 +2,7 @@
 
 from typing import Optional
 
-from pydantic import Field, field_validator
+from pydantic import Field, field_validator, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -12,6 +12,10 @@ class EnricherConfig(BaseSettings):
 
     All settings can be provided via environment variables (prefixed with ENRICHER_)
     or via a YAML configuration file.
+
+    Two LLM backends are supported:
+    - "claude-code" (default): Uses the local Claude Code CLI. No API key needed.
+    - "anthropic-api": Uses the Anthropic API directly. Requires an API key.
     """
 
     model_config = SettingsConfigDict(
@@ -30,16 +34,31 @@ class EnricherConfig(BaseSettings):
         default=None, description="Personal access token for DataHub API authentication"
     )
 
-    # Claude API Configuration
-    anthropic_api_key: str = Field(..., description="Anthropic API key for Claude")
-
-    # LLM Configuration
-    llm_model: str = Field(
-        default="claude-sonnet-4-5-20250929", description="Claude model to use"
+    # LLM Backend Selection
+    llm_backend: str = Field(
+        default="claude-code",
+        description="LLM backend: 'claude-code' (local CLI) or 'anthropic-api' (cloud)",
     )
-    llm_max_tokens: int = Field(default=4096, description="Maximum tokens for LLM responses")
+
+    # Anthropic API Configuration (only needed for 'anthropic-api' backend)
+    anthropic_api_key: Optional[str] = Field(
+        default=None, description="Anthropic API key (only required for 'anthropic-api' backend)"
+    )
+
+    # LLM Configuration (only used by 'anthropic-api' backend)
+    llm_model: str = Field(
+        default="claude-sonnet-4-5-20250929", description="Claude model to use (API backend only)"
+    )
+    llm_max_tokens: int = Field(
+        default=4096, description="Maximum tokens for LLM responses (API backend only)"
+    )
     llm_temperature: float = Field(
-        default=0.7, description="Temperature for LLM responses (0.0-1.0)"
+        default=0.7, description="Temperature for LLM responses (API backend only, 0.0-1.0)"
+    )
+
+    # Claude Code Configuration (only used by 'claude-code' backend)
+    claude_command: str = Field(
+        default="claude", description="Path to the Claude Code CLI binary"
     )
 
     # Processing Configuration
@@ -57,6 +76,25 @@ class EnricherConfig(BaseSettings):
     enable_column_descriptions: bool = Field(
         default=True, description="Enable column description generation"
     )
+
+    @field_validator("llm_backend")
+    @classmethod
+    def validate_backend(cls, v: str) -> str:
+        """Validate that the LLM backend is a supported value."""
+        valid_backends = ["claude-code", "anthropic-api"]
+        if v not in valid_backends:
+            raise ValueError(f"llm_backend must be one of {valid_backends}")
+        return v
+
+    @model_validator(mode="after")
+    def validate_api_key_for_backend(self) -> "EnricherConfig":
+        """Validate that anthropic_api_key is provided when using the API backend."""
+        if self.llm_backend == "anthropic-api" and not self.anthropic_api_key:
+            raise ValueError(
+                "anthropic_api_key is required when llm_backend is 'anthropic-api'. "
+                "Set ENRICHER_ANTHROPIC_API_KEY or switch to llm_backend='claude-code'."
+            )
+        return self
 
     @field_validator("llm_temperature")
     @classmethod

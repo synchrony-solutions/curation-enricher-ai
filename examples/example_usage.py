@@ -1,21 +1,27 @@
 """Example usage of the DataHub AI Enricher."""
 
 import asyncio
-import os
+import shutil
 
 from enricher import EnricherConfig, EnrichmentEngine
 
 
 async def main() -> None:
     """Run example enrichment workflow."""
-    # Load configuration from environment
+    # Load configuration from environment.
+    # By default, uses the "claude-code" backend (local Claude Code CLI).
+    # No API key needed -- just have `claude` installed and authenticated.
     config = EnricherConfig()
+
+    # Or, to explicitly use the Anthropic API backend:
+    # config = EnricherConfig(llm_backend="anthropic-api", anthropic_api_key="sk-ant-...")
 
     # Initialize the enrichment engine
     engine = EnrichmentEngine(config)
+    print(f"Using LLM backend: {engine.llm_service.backend_name()}")
 
     # Example 1: Enrich a single dataset
-    print("Example 1: Enriching a single dataset")
+    print("\nExample 1: Enriching a single dataset")
     dataset_urn = "urn:li:dataset:(urn:li:dataPlatform:snowflake,mydb.schema.users,PROD)"
     suggestions = await engine.enrich_dataset(dataset_urn)
 
@@ -43,10 +49,10 @@ async def main() -> None:
 
 
 if __name__ == "__main__":
-    # Ensure required environment variables are set
-    if not os.getenv("ANTHROPIC_API_KEY"):
-        print("Error: ANTHROPIC_API_KEY environment variable not set")
-        print("Please set it with: export ANTHROPIC_API_KEY=your_key_here")
-        exit(1)
+    # Check that Claude Code CLI is available (for the default backend)
+    if not shutil.which("claude"):
+        print("Warning: 'claude' CLI not found in PATH.")
+        print("Install Claude Code: https://docs.anthropic.com/en/docs/claude-code")
+        print("Or switch to the API backend: ENRICHER_LLM_BACKEND=anthropic-api")
 
     asyncio.run(main())

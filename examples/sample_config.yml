@@ -7,13 +7,22 @@ datahub:
   # Optional: Personal access token for authentication
   # gms_token: "your_token_here"
 
-# Claude API Configuration
+# LLM Backend: "claude-code" (default, local) or "anthropic-api" (cloud)
 llm:
-  # Get your API key from: https://console.anthropic.com/
-  api_key: "${ANTHROPIC_API_KEY}"
-  model: "claude-sonnet-4-5-20250929"
-  max_tokens: 4096
-  temperature: 0.7
+  backend: "claude-code"
+
+  # --- Claude Code backend (default) ---
+  # Uses the local `claude` CLI. No API key needed.
+  # Just install Claude Code and run `claude` once to authenticate.
+  # claude_command: "claude"
+
+  # --- Anthropic API backend ---
+  # Uncomment below and set backend to "anthropic-api" to use the cloud API.
+  # backend: "anthropic-api"
+  # api_key: "${ANTHROPIC_API_KEY}"
+  # model: "claude-sonnet-4-5-20250929"
+  # max_tokens: 4096
+  # temperature: 0.7
 
 # Processing Configuration
 processing:

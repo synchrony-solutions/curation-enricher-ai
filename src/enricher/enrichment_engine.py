@@ -5,9 +5,34 @@ from typing import Any, Dict, List, Optional
 
 from enricher.config import EnricherConfig
 from enricher.datahub_client import DataHubClient
-from enricher.llm_service import LLMService
+from enricher.llm_base import LLMServiceBase
 
 logger = logging.getLogger(__name__)
+
+
+def create_llm_service(config: EnricherConfig) -> LLMServiceBase:
+    """
+    Factory function to create the appropriate LLM service backend.
+
+    Args:
+        config: Enricher configuration with llm_backend setting
+
+    Returns:
+        An LLM service instance (ClaudeCodeLocalService or AnthropicAPIService)
+
+    Raises:
+        ValueError: If the configured backend is unknown
+    """
+    if config.llm_backend == "claude-code":
+        from enricher.llm_claude_code import ClaudeCodeLocalService
+
+        return ClaudeCodeLocalService(claude_command=config.claude_command)
+    elif config.llm_backend == "anthropic-api":
+        from enricher.llm_service import AnthropicAPIService
+
+        return AnthropicAPIService(config)
+    else:
+        raise ValueError(f"Unknown LLM backend: {config.llm_backend}")
 
 
 class EnrichmentSuggestion:
@@ -67,8 +92,10 @@ class EnrichmentEngine:
         self.datahub_client = DataHubClient(
             gms_url=config.datahub_gms_url, gms_token=config.datahub_gms_token
         )
-        self.llm_service = LLMService(config)
-        logger.info("EnrichmentEngine initialized")
+        self.llm_service = create_llm_service(config)
+        logger.info(
+            f"EnrichmentEngine initialized with backend: {self.llm_service.backend_name()}"
+        )
 
     async def enrich_dataset(self, dataset_urn: str) -> List[EnrichmentSuggestion]:
         """

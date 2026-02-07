@@ -10,9 +10,27 @@ def test_config() -> EnricherConfig:
     """
     Provide a test configuration with dummy values.
 
-    This fixture can be used across all tests that need a basic config.
+    Uses the default claude-code backend so no API key is needed.
     """
     return EnricherConfig(
+        llm_backend="claude-code",
+        datahub_gms_url="http://localhost:8080",
+        llm_temperature=0.7,
+        batch_size=5,
+        max_retries=2,
+        log_level="INFO",
+    )
+
+
+@pytest.fixture
+def test_config_api() -> EnricherConfig:
+    """
+    Provide a test configuration for the Anthropic API backend.
+
+    This fixture is used for tests that specifically test the API backend.
+    """
+    return EnricherConfig(
+        llm_backend="anthropic-api",
         anthropic_api_key="test_api_key_12345",
         datahub_gms_url="http://localhost:8080",
         llm_model="claude-sonnet-4-5-20250929",

@@ -164,7 +164,7 @@ def batch(
 
 @main.command()
 def test_connection() -> None:
-    """Test connection to DataHub and Claude API."""
+    """Test connection to DataHub and the configured LLM backend."""
     try:
         enricher_config = EnricherConfig()
         setup_logging(enricher_config.log_level)
@@ -180,17 +180,21 @@ def test_connection() -> None:
         datasets = asyncio.run(client.list_datasets(limit=1))
         click.echo(f"✅ DataHub connection successful (found {len(datasets)} datasets)")
 
-        # Test Claude API connection
-        click.echo("\n🤖 Testing Claude API connection...")
-        from enricher.llm_service import LLMService
+        # Test LLM backend connection
+        from enricher.enrichment_engine import create_llm_service
 
-        llm_service = LLMService(enricher_config)
-        click.echo(f"✅ Claude API initialized (model: {enricher_config.llm_model})")
+        click.echo(f"\n🤖 Testing LLM backend ({enricher_config.llm_backend})...")
+        llm_service = create_llm_service(enricher_config)
+        connected = asyncio.run(llm_service.check_connection())
+        if connected:
+            click.echo(f"✅ {llm_service.backend_name()} is available")
+        else:
+            click.echo(f"❌ {llm_service.backend_name()} is not available", err=True)
+            sys.exit(1)
 
         click.echo("\n✨ All connections successful!")
 
     except Exception as e:
-        logger.error(f"Connection test failed: {e}", exc_info=True)
         click.echo(f"❌ Error: {e}", err=True)
         sys.exit(1)
 
